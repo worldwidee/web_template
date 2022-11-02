@@ -18,10 +18,10 @@ class PageState extends GetxController {
 
   get deliverinItem => _deliveringItem;
   String get currentPage => _currentPage;
-  get currentRoute => _currentRoute;
-  get mainRoute => _mainRoute;
-  get childRoute => _childRoute;
-  get errorPage => _errorPage;
+  String? get currentRoute => _currentRoute;
+  SmartRoute? get mainRoute => _mainRoute;
+  ChildrenRoute? get childRoute => _childRoute;
+  Widget? get errorPage => _errorPage;
 
   set setDispose(dynamic dispose) {
     _disposeFuncs.add(dispose);

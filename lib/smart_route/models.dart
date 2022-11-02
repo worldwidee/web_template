@@ -7,6 +7,7 @@ class SmartRoute {
   String route;
   Widget page;
   List<String>? redirectFrom;
+  Map<String, String>? params;
   String? redirect, title;
   String? Function()? checkRedirect;
   List<ChildrenRoute>? children;
@@ -24,6 +25,8 @@ class SmartRoute {
 class ChildrenRoute {
   String name;
   String route;
+  Map<String, String>? params;
+
   List<dynamic>? _fathers;
   ChildrenRoute? _forward;
   ChildrenRoute? _behind;
