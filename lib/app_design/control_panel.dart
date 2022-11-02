@@ -8,7 +8,7 @@ import 'bottom_part.dart';
 import 'drawer.dart';
 
 class ControlPanel extends StatefulWidget {
-  String route;
+  String? route;
   ControlPanel({Key? key, required this.route}) : super(key: key);
 
   @override
@@ -22,19 +22,7 @@ class _ControlPanelState extends State<ControlPanel> {
   void checkRoute() {
     if (pageState.currentRoute != widget.route) {
       pageState.initRoute(widget.route);
-      if (pageState.currentPage != "") {
-        pageState.disposeFunc();
-      } else {
-        pageState.disposeFunc();
-        List<String> routes = widget.route.split("/");
-        if (routes.any((element) => element == "healthassistant")) {
-          errPageNum = 1;
-        } else if (routes.any((element) => element == "docassistant")) {
-          errPageNum = 2;
-        } else {
-          errPageNum = 0;
-        }
-      }
+      pageState.disposeFunc();
     }
   }
 
@@ -72,7 +60,7 @@ class _ControlPanelState extends State<ControlPanel> {
             children: [
               GetBuilder<PageState>(
                 builder: (controller) {
-                  return controller.getPage(widget.route);
+                  return controller.getPage();
                 },
               ),
               BottomPart()

@@ -89,21 +89,30 @@ class AppFonts extends GetxController {
       {required double width,
       required double height,
       bool isResposible = true}) {
+    bool? anyMobile = _appWidth!=0?appSettings.anyMobile:null;
     _appWidth = width;
     _appHeight = height;
-    if (width < 1000) {
-      appSettings.mobileMode = true;
-      print("_appWidth:$_appWidth");
-      print("_appHeight:$_appHeight");
+    if (width <= 1100) {
+      if (width > 900) {
+        appSettings.midMode = true;
+        appSettings.mobileMode = false;
+      } else {
+        appSettings.midMode = false;
+        appSettings.mobileMode = true;
+      }
       if (_appWidth > _appHeight) {
         appSettings.landScape = true;
-        _appHeight=_appWidth;
+        _appHeight = _appWidth;
       } else {
         appSettings.landScape = false;
       }
     } else {
       appSettings.mobileMode = false;
       appSettings.landScape = false;
+      appSettings.midMode = false;
+    }
+    if(anyMobile!=null&&appSettings.anyMobile!=anyMobile){
+      pageState.disposeFunc();
     }
     _totalSize = _appWidth + _appHeight;
     _size1 = isResposible

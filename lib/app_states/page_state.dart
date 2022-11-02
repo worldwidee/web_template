@@ -8,27 +8,31 @@ import '../smart_route/widgets/viewChildrenMenu.dart';
 class PageState extends GetxController {
   List<SmartRoute> _pages = [];
 
-  String _currentPage = "", _currentRoute = "";
+  String _currentPage = "";
+  String? _currentRoute;
   ChildrenRoute? _childRoute;
   SmartRoute? _mainRoute;
   List<dynamic> _disposeFuncs = [];
+  Widget? _errorPage;
   dynamic _deliveringItem;
 
   get deliverinItem => _deliveringItem;
-  get currentPage => _currentPage;
+  String get currentPage => _currentPage;
   get currentRoute => _currentRoute;
   get mainRoute => _mainRoute;
   get childRoute => _childRoute;
+  get errorPage => _errorPage;
 
   set setDispose(dynamic dispose) {
     _disposeFuncs.add(dispose);
   }
 
-  void initRoute(String route) {
+  void initRoute(String? route) {
     String pageName = "";
     SmartRoute? mainRoute;
     ChildrenRoute? childRoute;
-    for (var page in _pages) {
+    if(route!=null){
+      for (var page in _pages) {
       if (page.route == route) {
         mainRoute = page;
         pageName = page.name;
@@ -41,6 +45,7 @@ class PageState extends GetxController {
           childRoute = routeItem;
         }
       }
+    }
     }
     _currentRoute = route;
     _currentPage = pageName;
@@ -89,9 +94,10 @@ class PageState extends GetxController {
   }
 
   void initPages(
-      {required List<SmartRoute> pages, required String initPageName}) {
+      {required List<SmartRoute> pages, required String initPageName,required Widget errorPage}) {
     _pages = pages;
     _currentPage = initPageName;
+    _errorPage=errorPage;
     for (var page in _pages) {
       if (page.children != null) {
         setChildRoutes(
@@ -125,11 +131,11 @@ class PageState extends GetxController {
     }
   }
 
-  Widget getPage(String route) {
+  Widget getPage() {
     if (_mainRoute != null) {
       return _mainRoute!.page;
     } else {
-      return ErrorPage();
+      return _errorPage!;
     }
   }
 

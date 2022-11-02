@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:furkanirmak/main.dart';
-import 'package:furkanirmak/widgets.dart/dropDown.dart';
+
+import '../../main.dart';
+import '../../widgets.dart/dropDown.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

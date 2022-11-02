@@ -8,7 +8,7 @@ import '../models.dart';
 class SmartMaterial extends StatelessWidget {
   late GoRouter router;
   SmartMaterial(
-      {Key? key, Widget Function(BuildContext, GoRouterState)? errorBuilder})
+      {Key? key})
       : super(key: key) {
     router = GoRouter(
       routes: [
@@ -17,7 +17,7 @@ class SmartMaterial extends StatelessWidget {
             GoRoute(
               path: page.route,
               name: page.name,
-              redirect: (_) =>
+              redirect: (context, state) =>
                   (page.checkRedirect != null && page.checkRedirect!() != null)
                       ? page.checkRedirect!()
                       : page.redirect != null
@@ -40,7 +40,7 @@ class SmartMaterial extends StatelessWidget {
             GoRoute(
                 path: page.route,
                 name: page.name,
-                redirect: (_) => (page.checkRedirect != null &&
+                redirect: (context, state) => (page.checkRedirect != null &&
                         page.checkRedirect!() != null)
                     ? page.checkRedirect!()
                     : page.redirect,
@@ -58,13 +58,22 @@ class SmartMaterial extends StatelessWidget {
             for (var redirect in page.redirectFrom!)
               GoRoute(
                   path: redirect,
-                  redirect: (_) => (page.checkRedirect != null &&
+                  redirect: (context, state) => (page.checkRedirect != null &&
                           page.checkRedirect!() != null)
                       ? page.checkRedirect!()
                       : page.route),
         ]
       ],
-      errorBuilder: errorBuilder,
+      errorPageBuilder: (context, state) => CustomTransitionPage<void>(
+                      key: state.pageKey,
+                      child: ControlPanel(
+                        key: state.pageKey,
+                        route: null,
+                      ),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) =>
+                              FadeTransition(opacity: animation, child: child),
+                    ),
     );
   }
   List<GoRoute> getRoutes(
@@ -79,7 +88,7 @@ class SmartMaterial extends StatelessWidget {
         routeItem = GoRoute(
             path: path,
             name: child.name,
-            redirect: (_) =>
+            redirect: (context, state) =>
                 (child.checkRedirect != null && child.checkRedirect!() != null)
                     ? child.checkRedirect!()
                     : path + child.redirect!);
@@ -87,7 +96,7 @@ class SmartMaterial extends StatelessWidget {
         routeItem = GoRoute(
             path: path,
             name: child.name,
-            redirect: (_) =>
+            redirect: (context, state) =>
                 (child.checkRedirect != null && child.checkRedirect!() != null)
                     ? child.checkRedirect!()
                     : null,
@@ -116,7 +125,6 @@ class SmartMaterial extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        routeInformationParser: router.routeInformationParser,
-        routerDelegate: router.routerDelegate);
+        routerConfig: router,);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:web_template/pages/error_screen.dart';
 
 import 'app_design/control_panel.dart';
 import 'app_states/app_colors.dart';
@@ -69,7 +70,8 @@ void main() async {
       page: Home(),
     ),
   ];
-  pageState.initPages(pages: pages, initPageName: "home");
+  pageState.initPages(
+      pages: pages, initPageName: "home", errorPage: ErrorPage());
   runApp(MyApp());
 }
 
@@ -77,10 +79,6 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SmartMaterial(errorBuilder: (c, s) {
-      return ControlPanel(
-        route: s.path!,
-      );
-    });
+    return SmartMaterial();
   }
 }

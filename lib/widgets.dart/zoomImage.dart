@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_boxicons/flutter_boxicons.dart';
-import 'package:furkanirmak/widgets.dart/expandedButton.dart';
+import '../widgets.dart/expandedButton.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:painter/painter.dart';
 import 'package:o_color_picker/o_color_picker.dart';
